@@ -86,18 +86,21 @@ int main()
         //update scarfy position
         scarfyPos.y += velocity * dT;
 
-        //update running time
-        runningTime += dT;
-        if (runningTime >= updateTime)
+        if (!isInAir)
         {
-            runningTime = 0.0;
-            //update animation frame
-                scarfyRec.x = frame * scarfyRec.width;
-                frame++;
-                if (frame > 5)
-                {
-                    frame = 0;
-                }
+            //update running time
+            runningTime += dT;
+            if (runningTime >= updateTime)
+            {
+                runningTime = 0.0;
+                //update animation frame
+                    scarfyRec.x = frame * scarfyRec.width;
+                    frame++;
+                    if (frame > 5)
+                    {
+                        frame = 0;
+                    }
+            }
         }
 
 
