@@ -29,10 +29,15 @@ int main()
     Rectangle scarfyRec{0.0, 0.0, scarfy.width/6, scarfy.height};
     Vector2 scarfyPos{windowWidth/2 - scarfyRec.width/2, windowHeight - scarfyRec.height};
 
-    //animation frame
+    //animation scarfy frame
     int frame{};
     const float updateTime{1.0/10.0};
     float runningTime{};
+
+    //animation nebula frame
+    int nebFrame{};
+    const float nebUpdateTime{1.0/12.0};
+    float nebRunningTime{};
 
 
     int velocity{0};
@@ -86,6 +91,7 @@ int main()
         //update scarfy position
         scarfyPos.y += velocity * dT;
 
+        //update scarfy animation frame
         if (!isInAir)
         {
             //update running time
@@ -100,6 +106,19 @@ int main()
                     {
                         frame = 0;
                     }
+            }
+        }
+
+        //update nebula animation frame
+        nebRunningTime += dT;
+        if(nebRunningTime >= nebUpdateTime)
+        {
+            nebRunningTime = 0.0;
+            nebRec.x = nebFrame * nebRec.width;
+            nebFrame++;
+            if(nebFrame > 7)
+            {
+                nebFrame = 0;
             }
         }
 
