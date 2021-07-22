@@ -49,13 +49,6 @@ int main()
     scarfyData.updateTime = 1.0/10.0;
     scarfyData.runningTime = 0.0;
 
-    Rectangle scarfyRec{0.0, 0.0, scarfy.width/6, scarfy.height};
-    Vector2 scarfyPos{windowWidth/2 - scarfyRec.width/2, windowHeight - scarfyRec.height};
-
-    //animation scarfy frame
-    int frame{};
-    const float updateTime{1.0/10.0};
-    float runningTime{};
 
     //AnimData for Nebula
     AnimData nebData{ 
@@ -106,7 +99,7 @@ int main()
         ClearBackground(BLACK);
 
         //perform ground check
-        if(scarfyPos.y >= windowHeight - scarfyRec.height)
+        if(scarfyData.pos.y >= windowHeight - scarfyData.rec.height)
         {
             //rectangle is on the ground
             velocity = 0;
@@ -120,7 +113,7 @@ int main()
         }
 
         //Draw Scarfy
-        DrawTextureRec(scarfy, scarfyRec, scarfyPos, WHITE);
+        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
 
         //Draw nebula
         DrawTextureRec(nebula, nebRec, nebPos, WHITE);
@@ -140,22 +133,22 @@ int main()
         neb2Pos.x += nebVel * dT;
 
         //update scarfy position
-        scarfyPos.y += velocity * dT;
+        scarfyData.pos.y += velocity * dT;
 
         //update scarfy animation frame
         if (!isInAir)
         {
             //update running time
-            runningTime += dT;
-            if (runningTime >= updateTime)
+            scarfyData.runningTime += dT;
+            if (scarfyData.runningTime >= scarfyData.updateTime)
             {
-                runningTime = 0.0;
+                scarfyData.runningTime = 0.0;
                 //update animation frame
-                    scarfyRec.x = frame * scarfyRec.width;
-                    frame++;
-                    if (frame > 5)
+                    scarfyData.rec.x = scarfyData.frame * scarfyData.rec.width;
+                    scarfyData.frame++;
+                    if (scarfyData.frame > 5)
                     {
-                        frame = 0;
+                        scarfyData.frame = 0;
                     }
             }
         }
