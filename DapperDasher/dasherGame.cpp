@@ -87,13 +87,10 @@ int main()
         //Draw Scarfy
         DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
 
-        //Draw nebula
-        DrawTextureRec(nebula, nebulae[0].rec, nebulae[0].pos, WHITE);
-
-        //Draw second nebula
-        DrawTextureRec(nebula, nebulae[1].rec, nebulae[1].pos, RED);
-
-        //DrawTextureRec(nebula, nebulae[2].rec, nebulae[2].pos, BLUE);
+        for (int i = 0; i < sizeOfNebulae; i++)
+        {
+            DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
+        }
 
         //perform ground check
         if(scarfyData.pos.y >= windowDimensions[1] - scarfyData.rec.height)
@@ -114,11 +111,10 @@ int main()
             velocity += jumpVel;
         }
 
-        //update nebula position
-        nebulae[0].pos.x += nebVel * dT;
-
-        //update nebula-2 position
-        nebulae[1].pos.x += nebVel * dT;
+        for (int i = 0; i < sizeOfNebulae; i++)
+        {
+            nebulae[i].pos.x += nebVel * dT;
+        }
 
         //update scarfy position
         scarfyData.pos.y += velocity * dT;
@@ -138,32 +134,6 @@ int main()
                     {
                         scarfyData.frame = 0;
                     }
-            }
-        }
-
-        
-        nebulae[0].runningTime += dT;
-        if(nebulae[0].runningTime >= nebulae[0].updateTime)
-        {
-            nebulae[0].runningTime = 0.0;
-            nebulae[0].rec.x = nebulae[0].frame * nebulae[0].rec.width;
-            nebulae[0].frame++;
-            if(nebulae[0].frame > 7)
-            {
-                nebulae[0].frame = 0;
-            }
-        }
-
-        //update nebula-2 animation frame
-        nebulae[1].runningTime += dT;
-        if(nebulae[1].runningTime >= nebulae[1].updateTime)
-        {
-            nebulae[1].runningTime = 0.0;
-            nebulae[1].rec.x = nebulae[1].frame * nebulae[1].rec.width;
-            nebulae[1].frame++;
-            if(nebulae[1].frame > 7)
-            {
-                nebulae[1].frame = 0;
             }
         }
 
