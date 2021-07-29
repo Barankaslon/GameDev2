@@ -39,8 +39,8 @@ int main()
 {
 
     int windowDimensions[2];
-    windowDimensions[0] = 1200;
-    windowDimensions[1] = 800;
+    windowDimensions[0] = 518;
+    windowDimensions[1] = 384;
 
 
     InitWindow(windowDimensions[0], windowDimensions[1], "Dapper Dasher Game");
@@ -92,6 +92,10 @@ int main()
     //nebula x velocity(pixels/second)
     int nebVel{-200};
 
+    Texture2D background = LoadTexture("textures/far-buildings.png");
+    float bgX{};
+    Texture2D midground = LoadTexture("textures/back-buildings.png");
+    Texture2D foreground = LoadTexture("textures/foreground.png");
 
 
     SetTargetFPS(60);
@@ -102,15 +106,28 @@ int main()
         const float dT{GetFrameTime()};
 
         BeginDrawing();
-        ClearBackground(BLACK);
+        ClearBackground(WHITE);
 
-        //Draw Scarfy
-        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
+        bgX -= 20 * dT;
+        if (bgX <= -background.width *2)
+        {
+            bgX = 0.0;
+        }
+
+        //Draw Background
+        Vector2 bg1Pos{bgX, 0.0};
+        DrawTextureEx(background, bg1Pos, 0.0, 2.0, BLUE);
+        Vector2 bg2Pos{bgX + background.width * 2, 0.0};
+        DrawTextureEx(background, bg2Pos, 0.0, 2.0, BLUE);
 
         for (int i = 0; i < sizeOfNebulae; i++)
         {
             DrawTextureRec(nebula, nebulae[i].rec, nebulae[i].pos, WHITE);
         }
+
+
+        //Draw Scarfy
+        DrawTextureRec(scarfy, scarfyData.rec, scarfyData.pos, WHITE);
 
         //perform ground check
         if(isOnGround(scarfyData, windowDimensions[1]))
@@ -157,6 +174,9 @@ int main()
     }
     UnloadTexture(scarfy);
     UnloadTexture(nebula);
+    UnloadTexture(background);
+    UnloadTexture(midground);
+    UnloadTexture(foreground);
     CloseWindow();
     
 } 
