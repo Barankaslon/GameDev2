@@ -17,6 +17,8 @@ int main()
 
     SetTargetFPS(60);
 
+    float speed{4.0};
+
     while (!WindowShouldClose())
     {
         BeginDrawing();
@@ -30,7 +32,8 @@ int main()
             if (Vector2Length(direction) != 0.0)
             {
                 // set mapPos = mapPos - direction
-                mapPos = Vector2Subtract(mapPos, Vector2Normalize(direction));
+                
+                mapPos = Vector2Subtract(mapPos, Vector2Scale(Vector2Normalize(direction), speed));
             }
 
         DrawTextureEx(map, mapPos, 0.0, 4.0, WHITE);
